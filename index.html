@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1" />
+    <title>A/B API Version Comparison</title>
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.15/esri/css/main.css"
+    />
+    <link rel="stylesheet" href="custom.css" />
+    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    <script>
+      var dojoConfig = {
+        async: true,
+        packages: [
+          {
+            name: "app",
+            location: location.pathname.replace(/\/[^/]+$/, "") + "/app"
+          }
+        ]
+      };
+    </script>
+  </head>
+
+  <body>
+    <div id="SceneView"></div>
+    <div id="stats"></div>
+
+    <iframe
+      id="viewRight"
+      src="./bee.html"
+      marginwidth="0"
+      marginheight="0"
+      frameborder="0"
+    ></iframe>
+    <div id="slides"></div>
+
+    <header>ArcGIS JS API 4.15</header>
+    <!-- <script src="../../arcgis-js-api-4.12/test-apps/dojo-config.js"></script>
+    <script src="../../arcgis-js-api-4.12/dojo/dojo.js"></script> -->
+    <script src="https://js.arcgis.com/4.15"></script>
+    <script>
+      require(["app/main", "dojo/domReady!"]);
+    </script>
+  </body>
+</html>
