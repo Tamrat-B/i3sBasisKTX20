@@ -57,7 +57,7 @@ require([
         });
     });
   } else {
-    var webscene = params["webscene"] || "819bf90274394de982c6ae8bf5ef11a7";
+    var webscene = params["webscene"] || "5f50ba90605142c09523e37fabe141e5";
     if (webscene.startsWith("http")) {
       esriRequest(webscene).then(function(json) {
         view.map = WebScene.fromJSON(json.data);
