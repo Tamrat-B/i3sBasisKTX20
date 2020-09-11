@@ -10,7 +10,7 @@ define(["esri/Viewpoint", "esri/core/watchUtils"], function(Viewpoint, watchUtil
   return {
     connect: function(view_) {
       view = view_;
-      channel = new BroadcastChannel("comparei3s.view.sync");
+      channel = new BroadcastChannel("i3scompare.view.sync");
 
       channel.onmessage = function(newValue) {
         if (newValue.data.slide) {
