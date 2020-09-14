@@ -30,6 +30,9 @@ require([
   );
 
   has.add("disable-feature:single-idb-cache", 1);
+  var slide2Swapkey3DTiles = "3DTiles2I3S";
+  var slide2SwapkeyI3S = "I3SNative";
+
 
   var portal = params["portal"];
   if (portal) {
@@ -82,13 +85,13 @@ require([
     var slides = view.map.presentation.slides;
     var slidesDiv = document.getElementById("slides");
     var benchmarkDiv = document.getElementById("benchmark");
+    var slideId2TitleMap = new Map();
 
     function addSlide(slide, time) {
       var div = slidesDiv || benchmarkDiv;
       if (!div) {
         return;
       }
-
       // Create a new <div> element for each slide and place the title of the slide in the element.
       var slideDiv = document.createElement("div");
       slideDiv.id = slide.id;
@@ -102,17 +105,36 @@ require([
 
       // Create a new <img> element and place it inside the newly created <div>.
       // This will reference the thumbnail from the slide.
-      var img = new Image();
-      img.src = slide.thumbnail.url;
-      img.title = slide.title.text;
-      slideDiv.appendChild(img);
-      div.appendChild(slideDiv);
-
+      if (slide.title.text.split("_")[1] ==  slide2SwapkeyI3S) {
+        var img = new Image();
+        img.src = slide.thumbnail.url;
+        img.title = slide.title.text;
+        slideDiv.appendChild(img);
+        div.appendChild(slideDiv);
+      }
       slideDiv.addEventListener("click", function() {
         slide.applyTo(view);
-        syncUtil.syncSlide(slide.id);
+        let splitslidename = slide.title.text.split("_");
+        let slideid2Sync2 = slide.id;
+        let slide2Compare = splitslidename[0];
+        if (splitslidename[1] == slide2SwapkeyI3S) {
+          slide2Compare = slide2Compare + "_" + slide2Swapkey3DTiles;
+        }
+         //else {
+            //slide2Compare = slide2Compare + "_" + slide2SwapkeyI3S;
+            //}
+          for (let [key, value] of slideId2TitleMap) {
+            console.log(`${key} - ${value}`);
+           }
+          slideid2Sync2 = slideId2TitleMap.get(slide2Compare);
+          syncUtil.syncSlide(slideid2Sync2);
       });
     }
+
+    function addSlideTitle2IDkey(slide, slideId2TitleMap) {
+       slideId2TitleMap.set(slide.title.text, slide.id);
+       return;
+     }
 
     if (!!animate) {
       var current = -1;
@@ -140,7 +162,11 @@ require([
     }
 
     slides.forEach(function(slide) {
+      //if (slide.title.text.split("_")[1] ==  slide2SwapkeyI3S &&
+      //slideId2TitleMap.get(slide.title.text) == undefined) {
       addSlide(slide);
+      //}
+      addSlideTitle2IDkey(slide, slideId2TitleMap);
     });
   });
 
