@@ -1,7 +1,11 @@
 # I3S Compare
 =======
 
-An application to compare an Imported 3D Tiles vs native I3S service/slpks
+An application that compares a 3D Tiles content imported as an I3S service vs a native one. This tool is largely based on the [ArcGIS JS API](https://github.com/eile/aBee) that comares different JS API versions.
+
+To compare using this app, the app expects a webscene with bookmarks named using the following convention:
+[anyName]*_I3SNative*  (eg. `view.1._I3SNative`) - the name of a bookmark showcasing the native i3s layer.
+[anyName]*_3DTiles2I3S* - (eg. `view.1.3DTiles2I3S`) - the name of the corresponding bookmark showcasing the imported 3d tiles layer.
 
 [Live Version](https://tamrat-b.github.io/i3scompare)
 
