@@ -30,8 +30,8 @@ require([
   );
 
   has.add("disable-feature:single-idb-cache", 1);
-  var slide2Swapkey_1 = "scene_1";
-  var slide2Swapkey_2 = "scene_2";
+  var slide2Swapkey_1 = "scene.1";
+  var slide2Swapkey_2 = "scene.2";
 
 
   var portal = params["portal"];
