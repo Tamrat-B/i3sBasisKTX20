@@ -30,8 +30,8 @@ require([
   );
 
   has.add("disable-feature:single-idb-cache", 1);
-  var slide2Swapkey3DTiles = "3DTiles2I3S";
-  var slide2SwapkeyI3S = "I3SNative";
+  var slide2Swapkey_1 = "scene_1";
+  var slide2Swapkey_2 = "scene_2";
 
 
   var portal = params["portal"];
@@ -60,7 +60,7 @@ require([
         });
     });
   } else {
-    var webscene = params["webscene"] || "5f50ba90605142c09523e37fabe141e5";
+    var webscene = params["webscene"] || "99c2bc22a0ee42c981abb777710d1518";
     if (webscene.startsWith("http")) {
       esriRequest(webscene).then(function(json) {
         view.map = WebScene.fromJSON(json.data);
@@ -105,7 +105,7 @@ require([
 
       // Create a new <img> element and place it inside the newly created <div>.
       // This will reference the thumbnail from the slide.
-      if (slide.title.text.split("_")[1] ==  slide2SwapkeyI3S) {
+      if (slide.title.text.split("_")[1] ==  slide2Swapkey_2) {
         var img = new Image();
         img.src = slide.thumbnail.url;
         img.title = slide.title.text;
@@ -117,11 +117,11 @@ require([
         let splitslidename = slide.title.text.split("_");
         let slideid2Sync2 = slide.id;
         let slide2Compare = splitslidename[0];
-        if (splitslidename[1] == slide2SwapkeyI3S) {
-          slide2Compare = slide2Compare + "_" + slide2Swapkey3DTiles;
+        if (splitslidename[1] == slide2Swapkey_2) {
+          slide2Compare = slide2Compare + "_" + slide2Swapkey_1;
         }
          //else {
-            //slide2Compare = slide2Compare + "_" + slide2SwapkeyI3S;
+            //slide2Compare = slide2Compare + "_" + slide2Swapkey_2;
             //}
           for (let [key, value] of slideId2TitleMap) {
             console.log(`${key} - ${value}`);
@@ -162,7 +162,7 @@ require([
     }
 
     slides.forEach(function(slide) {
-      //if (slide.title.text.split("_")[1] ==  slide2SwapkeyI3S &&
+      //if (slide.title.text.split("_")[1] ==  slide2Swapkey_2 &&
       //slideId2TitleMap.get(slide.title.text) == undefined) {
       addSlide(slide);
       //}
