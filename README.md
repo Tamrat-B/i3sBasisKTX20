@@ -13,5 +13,5 @@ To compare different layers, the app expects a webscene with bookmarks named usi
 
 * [webscene=id](https://3dcities.maps.arcgis.com/home/item.html?id=144a63d9f009408fafac550719c14cba): Load the given webscene from the portal (default www.arcgis.com)
 * portal=url: Use the given portal URL
-* [animate=true](https://tamrat-b.github.io/i3sVerCompare?animate=true): Run through all slides in both versions once
-* [stats=true](https://tamrat-b.github.io/i3sVerCompare/?stats=true): Display some scene statistics
+* [animate=true](https://tamrat-b.github.io/i3sBasisCompare?animate=true): Run through all slides in both versions once
+* [stats=true](https://tamrat-b.github.io/i3sBasisCompare/?stats=true): Display some scene statistics
