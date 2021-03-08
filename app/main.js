@@ -21,7 +21,7 @@ require([
   waitForResources,
   syncUtil
 ) {
-  var params = {};
+  var params = {stats: "true"};
   has.add("disable-feature:single-idb-cache", 1);
   var slide2Swapkey_1 = "scene.1";
   var slide2Swapkey_2 = "scene.2";
