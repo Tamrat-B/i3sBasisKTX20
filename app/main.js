@@ -22,7 +22,8 @@ require([
   syncUtil
 ) {
   var params = {};
-  var parts = window.parent.location.href.replace(
+  var href = window.parent?.location?.href;
+  var parts = href?.replace(
     /[?&]+([^=&]+)=([^&]*)/gi,
     function(m, key, value) {
       params[key] = value;
