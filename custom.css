@@ -47,7 +47,7 @@ body {
 
 #slides {
   position: absolute;
-  top: 50px;
+  top: 20px;
   right: 20px;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
