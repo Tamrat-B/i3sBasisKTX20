@@ -22,7 +22,7 @@ require([
   syncUtil
 ) {
   var params = {};
-  params["stats"] = true;
+  //params["stats"] = true;
   //var href = window.parent?.location?.href;
   //var parts = href?.replace(
     ///[?&]+([^=&]+)=([^&]*)/gi,
