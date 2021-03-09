@@ -46,7 +46,7 @@ require([
     : new MapView({ container: "MapView", map: webscene, constraints: { snapToZoom: false } });
   var url = params["url"];
   var animate = params["animate"];
-  var stats = params["stats"];
+  var stats = true;//params["stats"];
 
   if (url) {
     view.map = new WebScene({ basemap: "topo", ground: "world-elevation" });
