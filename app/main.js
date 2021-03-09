@@ -21,7 +21,15 @@ require([
   waitForResources,
   syncUtil
 ) {
-  var params = {stats: "true"};
+  var params = {};
+  params["stats"] = true;
+  //var href = window.parent?.location?.href;
+  //var parts = href?.replace(
+    ///[?&]+([^=&]+)=([^&]*)/gi,
+    //function(m, key, value) {
+      //params[key] = value;
+    //}
+  //);
   has.add("disable-feature:single-idb-cache", 1);
   var slide2Swapkey_1 = "scene.1";
   var slide2Swapkey_2 = "scene.2";
