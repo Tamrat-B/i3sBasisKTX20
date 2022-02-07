@@ -81,7 +81,7 @@ require([
 
   function updateMemoryTitle(used, total, quality) {
     const title = document.getElementById("title");
-    title.innerHTML = `Memory: ${getMB(used)}MB/${getMB(
+    title.innerHTML = `Memory : ${getMB(used)}MB/${getMB(
           total
         )}MB  -  Quality: ${Math.round(100 * quality)} %`;
   }
@@ -100,7 +100,6 @@ require([
             layerInfo.layer.title
           }</td><td class="center">${getMB(layerInfo.memory)}</td>`;
         tableMemoryContainer.appendChild(row);
-        console.log(layerInfo.layer.type);
       }
     }
     //uncomment next blocks for feature layer stat support
