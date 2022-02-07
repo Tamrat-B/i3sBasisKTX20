@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Fascinate");
-
 * {
   margin: 0;
   padding: 0;
@@ -35,7 +34,7 @@ body {
 
 #stats {
   position: absolute;
-  bottom: 10px;
+  bottom: 1px;
   left: 10px;
   padding: 20px;
   font-family: "Avenir Next W01", "Avenir Next W00", "Avenir Next", "Avenir", "Helvetica Neue", Helvetica, Arial,
@@ -47,7 +46,7 @@ body {
 
 #slides {
   position: absolute;
-  top: 60px;
+  top: 100px;
   right: 20px;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
 }
@@ -58,7 +57,7 @@ img {
 
 #benchmark {
   position: absolute;
-  top: 20px;
+  top: 110px;
   right: 20px;
   text-align: right;
   text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;

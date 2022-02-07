@@ -8,7 +8,10 @@ require([
   "esri/views/MapView",
   "esri/views/SceneView",
   "esri/views/support/waitForResources",
-  "app/syncUtil"
+  "app/syncUtil",
+  "esri/layers/SceneLayer",
+  "esri/widgets/Expand",
+  "esri/widgets/Daylight"
 ], function(
   has,
   config,
@@ -19,7 +22,10 @@ require([
   MapView,
   SceneView,
   waitForResources,
-  syncUtil
+  syncUtil,
+  SceneLayer,
+  Expand,
+  Daylight
 ) {
   var params = {};
   //params["stats"] = true;
@@ -42,11 +48,58 @@ require([
 
   var sceneView = document.getElementById("SceneView");
   var view = sceneView
-    ? new SceneView({ container: "SceneView", map: webscene })
+    ? new SceneView({ container: "SceneView", map: webscene,
+            qualityProfile: "high",
+            environment: {
+              atmosphere: {
+                quality: "high"
+              },
+              weather: {
+                type: "cloudy",
+                cloudCover: 0.4 // autocasts as new CloudyWeather({ cloudCover: 0.4 })
+              }}})
     : new MapView({ container: "MapView", map: webscene, constraints: { snapToZoom: false } });
   var url = params["url"];
   var animate = params["animate"];
   var stats = true;//params["stats"];
+  /***********************************
+   * Add UI elements to the view
+   ***********************************/
+  const weatherDropdown = document.getElementById("weatherDropdown");
+  view.ui.add(weatherDropdown, "top-right");
+
+  const daylightExpand = new Expand({
+    view: view,
+    content: new Daylight({
+      view: view
+    })
+  });
+  view.ui.add(daylightExpand, "bottom-right");
+
+  /***********************************
+   * Add functionality to the dropdown menu
+   ***********************************/
+  // Listen to changes in the dropdown
+  weatherDropdown.addEventListener("calciteDropdownSelect", () => {
+    // Read the id of the current selected item
+    let selectedWeather = weatherDropdown.selectedItems[0].id;
+    // Get the new weather instance and set it to the weather property of the view
+    view.environment.weather = setWeather(selectedWeather);
+  });
+
+  // Returns instances of the different weather types
+  function setWeather(selectedWeather) {
+    switch (selectedWeather) {
+      case "Sunny":
+        return { type: "sunny", cloudCover: 0.8 }; // autocasts as new SunnyWeather({ cloudCover: 0.8 })
+      case "Cloudy":
+        return { type: "cloudy", cloudCover: 0.4 }; // autocasts as new CloudyWeather({ cloudCover: 0.4})
+      case "Rainy":
+        return { type: "rainy", cloudCover: 0.4 }; // autocasts as new RainyWeather({ cloudCover: 0.4 })
+      case "Foggy":
+        return { type: "foggy", fogStrength: 0.6 }; // autocasts as new FoggyWeather({ fogStrength: 0.6 })
+    }
+  }
 
   if (url) {
     view.map = new WebScene({ basemap: "topo", ground: "world-elevation" });
@@ -206,4 +259,4 @@ require([
     watchUtils.whenTrueOnce(view, "ready").then(function() {
       setTimeout(updateStats, 1);
     });
-});
+})        ;

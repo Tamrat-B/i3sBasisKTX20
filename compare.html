@@ -1,40 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="initial-scale=1" />
-    <title>I3S Comparison</title>
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/next/esri/css/main.css"
-    />
-    <link rel="stylesheet" href="compare.css" />
-    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
-    <script>
-      var dojoConfig = {
-        async: true,
-        packages: [
-          {
-            name: "app",
-            location: location.pathname.replace(/\/[^/]+$/, "") + "/app"
-          }
-        ],
-        has: {"disable-feature:i3s-basis": 0}
-      };
-    </script>
-    <!-- <script src="../arcgis-js-api-4/test-apps/dojo-config.js"></script>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1" />
+  <title>I3S Comparison</title>
+  <link rel="stylesheet" href="https://js.arcgis.com/next/esri/css/main.css" />
+  <link rel="stylesheet" href="compare.css" />
+  <link rel="stylesheet" href="https://js.arcgis.com/next/esri/themes/light/main.css" />
+  <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+  <script>
+    var dojoConfig = {
+      async: true,
+      packages: [{
+        name: "app",
+        location: location.pathname.replace(/\/[^/]+$/, "") + "/app"
+      }],
+      has: {
+        "disable-feature:i3s-basis": 0
+      }
+    };
+  </script>
+  <!-- <script src="../arcgis-js-api-4/test-apps/dojo-config.js"></script>
     <script src="../arcgis-js-api-4/dojo/dojo.js"></script> -->
-    <script src="https://js.arcgis.com/next/"></script>
-  </head>
+  <script src="https://js.arcgis.com/next/"></script>
+  <script type="module" src="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.esm.js"></script>
+  <script nomodule="" src="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://js.arcgis.com/calcite-components/1.0.0-beta.69/calcite.css" />
+</head>
 
-  <body>
-    <div id="SceneView"></div>
-    <div id="stats"></div>
-    <div id="benchmark"></div>
+<body>
+  <div id="SceneView"></div>
+  <div id="stats"></div>
+  <!--<div id="benchmark"></div> -->
+  <header>An I3S Layer with Basis in KTX™ 2.0</header>
+  <calcite-dropdown id="weatherDropdown">
+  <calcite-button slot="dropdown-trigger">Select Weather</calcite-button>
+  <calcite-dropdown-group>
+    <calcite-dropdown-item id="Sunny">Sunny</calcite-dropdown-item>
+    <calcite-dropdown-item id="Cloudy" active>Cloudy</calcite-dropdown-item>
+    <calcite-dropdown-item id="Rainy">Rainy</calcite-dropdown-item>
+    <calcite-dropdown-item id="Foggy">Foggy</calcite-dropdown-item>
+  </calcite-dropdown-group>
+</calcite-dropdown>
+  <script>
+    require(["app/main", "dojo/domReady!"]);
+  </script>
+</body>
 
-    <header>An I3S Layer with Basis in KTX2.0</header>
-    <script>
-      require(["app/main", "dojo/domReady!"]);
-    </script>
-  </body>
 </html>
