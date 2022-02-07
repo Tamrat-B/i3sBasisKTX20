@@ -28,15 +28,7 @@ require([
   Daylight
 ) {
   var params = {};
-  //params["stats"] = true;
-  //var href = window.parent?.location?.href;
-  //var parts = href?.replace(
-    ///[?&]+([^=&]+)=([^&]*)/gi,
-    //function(m, key, value) {
-      //params[key] = value;
-    //}
-  //);
-  has.add("disable-feature:single-idb-cache", 1);
+  //has.add("disable-feature:single-idb-cache", 1);
   var slide2Swapkey_1 = "scene.1";
   var slide2Swapkey_2 = "scene.2";
 
@@ -47,21 +39,112 @@ require([
   }
 
   var sceneView = document.getElementById("SceneView");
-  var view = sceneView
-    ? new SceneView({ container: "SceneView", map: webscene,
-            qualityProfile: "high",
-            environment: {
-              atmosphere: {
-                quality: "high"
-              },
-              weather: {
-                type: "cloudy",
-                cloudCover: 0.4 // autocasts as new CloudyWeather({ cloudCover: 0.4 })
-              }}})
-    : new MapView({ container: "MapView", map: webscene, constraints: { snapToZoom: false } });
+  var view = sceneView ?
+    new SceneView({
+      container: "SceneView",
+      map: webscene,
+      qualityProfile: "high",
+      environment: {
+        atmosphere: {
+          quality: "high"
+        },
+        weather: {
+          type: "cloudy",
+          cloudCover: 0.4 // autocasts as new CloudyWeather({ cloudCover: 0.4 })
+        },
+        highlightOptions: {
+          haloOpacity: 0
+        }
+      }
+    }) :
+    new MapView({
+      container: "MapView",
+      map: webscene,
+      constraints: {
+        snapToZoom: false
+      }
+    });
+  view.when(() => {
+    view.ui.add("performanceInfo", "bottom-left");
+    updatePerformanceInfo();
+  });
+  const updatePerformanceInfo = () => {
+    const performanceInfo = view.performanceInfo;
+    updateMemoryTitle(
+      performanceInfo.usedMemory,
+      performanceInfo.totalMemory,
+      performanceInfo.quality
+    );
+    updateTables(performanceInfo);
+    setTimeout(updatePerformanceInfo, 1000);
+  };
+
+  function updateMemoryTitle(used, total, quality) {
+    const title = document.getElementById("title");
+    title.innerHTML = `Memory: ${getMB(used)}MB/${getMB(
+          total
+        )}MB  -  Quality: ${Math.round(100 * quality)} %`;
+  }
+
+  function updateTables(stats) {
+    const tableMemoryContainer = document.getElementById("memory");
+    tableMemoryContainer.innerHTML = `<tr>
+          <th>Resource</th>
+          <th>Memory (MB)</th>
+        </tr>`;
+    for (layerInfo of stats.layerPerformanceInfos) {
+      if (layerInfo.layer.type == "integrated-mesh" ||
+        layerInfo.layer.type == "3dobject") {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${
+            layerInfo.layer.title
+          }</td><td class="center">${getMB(layerInfo.memory)}</td>`;
+        tableMemoryContainer.appendChild(row);
+        console.log(layerInfo.layer.type);
+      }
+    }
+    //uncomment next blocks for feature layer stat support
+    //const tableCountContainer = document.getElementById("count");
+    /* tableCountContainer.innerHTML = `<tr>
+          <th>Layer - Features</th>
+          <th>Displayed / Max<br>(count)</th>
+          <th>Total<br>(count)</th>
+        </tr>`;
+    */
+
+    /*
+    for (layerInfo of stats.layerPerformanceInfos) {
+      if (layerInfo.maximumNumberOfFeatures) {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${layerInfo.layer.title}`;
+        row.innerHTML += `<td class="center">${
+              layerInfo.displayedNumberOfFeatures
+                ? layerInfo.displayedNumberOfFeatures
+                : "-"
+            } / ${
+              layerInfo.maximumNumberOfFeatures
+                ? layerInfo.maximumNumberOfFeatures
+                : "-"
+            }</td>`;
+        row.innerHTML += `<td class="center">${
+              layerInfo.totalNumberOfFeatures
+                ? layerInfo.totalNumberOfFeatures
+                : "-"
+            }</td>`;
+        tableCountContainer.appendChild(row);
+      }
+    }
+    */
+  }
+
+  function getMB(bytes) {
+    const kilobyte = 1024;
+    const megabyte = kilobyte * 1024;
+    return Math.round(bytes / megabyte);
+  }
   var url = params["url"];
   var animate = params["animate"];
-  var stats = true;//params["stats"];
+  var stats = true; //params["stats"];
   /***********************************
    * Add UI elements to the view
    ***********************************/
@@ -91,19 +174,32 @@ require([
   function setWeather(selectedWeather) {
     switch (selectedWeather) {
       case "Sunny":
-        return { type: "sunny", cloudCover: 0.8 }; // autocasts as new SunnyWeather({ cloudCover: 0.8 })
+        return {
+          type: "sunny", cloudCover: 0.8
+        }; // autocasts as new SunnyWeather({ cloudCover: 0.8 })
       case "Cloudy":
-        return { type: "cloudy", cloudCover: 0.4 }; // autocasts as new CloudyWeather({ cloudCover: 0.4})
+        return {
+          type: "cloudy", cloudCover: 0.4
+        }; // autocasts as new CloudyWeather({ cloudCover: 0.4})
       case "Rainy":
-        return { type: "rainy", cloudCover: 0.4 }; // autocasts as new RainyWeather({ cloudCover: 0.4 })
+        return {
+          type: "rainy", cloudCover: 0.4
+        }; // autocasts as new RainyWeather({ cloudCover: 0.4 })
       case "Foggy":
-        return { type: "foggy", fogStrength: 0.6 }; // autocasts as new FoggyWeather({ fogStrength: 0.6 })
+        return {
+          type: "foggy", fogStrength: 0.6
+        }; // autocasts as new FoggyWeather({ fogStrength: 0.6 })
     }
   }
 
   if (url) {
-    view.map = new WebScene({ basemap: "topo", ground: "world-elevation" });
-    Layer.fromArcGISServerUrl({ url: url }).then(function(layer) {
+    view.map = new WebScene({
+      basemap: "topo",
+      ground: "world-elevation"
+    });
+    Layer.fromArcGISServerUrl({
+      url: url
+    }).then(function(layer) {
       view.map.layers.add(layer);
       layer
         .when(function() {
@@ -120,7 +216,11 @@ require([
         view.map = WebScene.fromJSON(json.data);
       });
     } else {
-      view.map = new WebScene({ portalItem: { id: webscene } });
+      view.map = new WebScene({
+        portalItem: {
+          id: webscene
+        }
+      });
     }
   }
 
@@ -159,7 +259,7 @@ require([
 
       // Create a new <img> element and place it inside the newly created <div>.
       // This will reference the thumbnail from the slide.
-      if (slide.title.text.split("_")[1] ==  slide2Swapkey_2) {
+      if (slide.title.text.split("_")[1] == slide2Swapkey_2) {
         var img = new Image();
         img.src = slide.thumbnail.url;
         img.title = slide.title.text;
@@ -174,21 +274,21 @@ require([
         if (splitslidename[1] == slide2Swapkey_2) {
           slide2Compare = slide2Compare + "_" + slide2Swapkey_1;
         }
-         //else {
-            //slide2Compare = slide2Compare + "_" + slide2Swapkey_2;
-            //}
-          for (let [key, value] of slideId2TitleMap) {
-            console.log(`${key} - ${value}`);
-           }
-          slideid2Sync2 = slideId2TitleMap.get(slide2Compare);
-          syncUtil.syncSlide(slideid2Sync2);
+        //else {
+        //slide2Compare = slide2Compare + "_" + slide2Swapkey_2;
+        //}
+        for (let [key, value] of slideId2TitleMap) {
+          console.log(`${key} - ${value}`);
+        }
+        slideid2Sync2 = slideId2TitleMap.get(slide2Compare);
+        syncUtil.syncSlide(slideid2Sync2);
       });
     }
 
     function addSlideTitle2IDkey(slide, slideId2TitleMap) {
-       slideId2TitleMap.set(slide.title.text, slide.id);
-       return;
-     }
+      slideId2TitleMap.set(slide.title.text, slide.id);
+      return;
+    }
 
     if (!!animate) {
       var current = -1;
@@ -207,7 +307,9 @@ require([
         }
 
         start = window.performance.now();
-        slides.getItemAt(current).applyTo(view, { animate: false });
+        slides.getItemAt(current).applyTo(view, {
+          animate: false
+        });
         waitForResources(view, nextSlide);
       }
 
@@ -223,40 +325,4 @@ require([
       addSlideTitle2IDkey(slide, slideId2TitleMap);
     });
   });
-
-  function updateStats() {
-    setTimeout(updateStats, 1000);
-    var textContent = "";
-
-    if (view.getStats) {
-      var stats = view.getStats();
-      var keys = Object.keys(stats);
-      for (var i = 0; i < keys.length; ++i) {
-        textContent += "<br/>" + keys[i] + ": " + stats[keys[i]];
-      }
-    } else {
-      var rc = view.resourceController;
-      var mc = rc.memoryController || rc._memoryController;
-      if (mc && mc._cacheStorage) {
-        textContent =
-          "Memory: " +
-          (mc._memoryUsed * mc._maxMemory).toFixed() +
-          " of " +
-          mc._maxMemory.toFixed() +
-          "MB<br>" +
-          "Cache: " +
-          (mc._cacheStorage._size / 1048576).toFixed() +
-          " of " +
-          (mc._cacheStorage._maxSize / 1048576).toFixed() +
-          "MB<br>";
-      }
-    }
-    document.getElementById("stats").innerHTML = textContent;
-  }
-
-  !!stats &&
-    sceneView &&
-    watchUtils.whenTrueOnce(view, "ready").then(function() {
-      setTimeout(updateStats, 1);
-    });
-})        ;
+});

@@ -27,7 +27,12 @@
 </head>
 
 <body>
-  <div id="SceneView"></div>
+  <div id="SceneView">
+    <div id="performanceInfo">
+      <h4 id="title"></h4>
+      <table id="memory"></table>
+      <table id="count"></table>
+  </div>
   <div id="stats"></div>
   <calcite-dropdown id="weatherDropdown">
   <calcite-button slot="dropdown-trigger">Select Weather</calcite-button>
@@ -39,7 +44,7 @@
   </calcite-dropdown-group>
 </calcite-dropdown>
   <iframe id="viewRight" src="./compare.html" marginwidth="0" marginheight="0" frameborder="0"></iframe>
-  <div id="slides"></div>  
+  <div id="slides"></div>
   <header>An I3S Layer with JPEG</header>
   <script src="https://js.arcgis.com/next/"></script>
   <script>
