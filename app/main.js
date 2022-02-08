@@ -81,7 +81,7 @@ require([
 
   function updateMemoryTitle(used, total, quality) {
     const title = document.getElementById("title");
-    title.innerHTML = `Memory : ${getMB(used)}MB/${getMB(
+    title.innerHTML = `Scene Memory (Used/Available) : ${getMB(used)}MB/${getMB(
           total
         )}MB  -  Quality: ${Math.round(100 * quality)} %`;
   }
@@ -90,7 +90,7 @@ require([
     const tableMemoryContainer = document.getElementById("memory");
     tableMemoryContainer.innerHTML = `<tr>
           <th>Layer</th>
-          <th>Memory (MB)</th>
+          <th>Memory used (MB)</th>
         </tr>`;
     for (layerInfo of stats.layerPerformanceInfos) {
       if (layerInfo.layer.type == "integrated-mesh" ||
