@@ -89,7 +89,7 @@ require([
   function updateTables(stats) {
     const tableMemoryContainer = document.getElementById("memory");
     tableMemoryContainer.innerHTML = `<tr>
-          <th>Resource</th>
+          <th>Layer</th>
           <th>Memory (MB)</th>
         </tr>`;
     for (layerInfo of stats.layerPerformanceInfos) {
