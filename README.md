@@ -1,7 +1,7 @@
-# I3S Version Compare
+# Compare Jpeg vs. Basis Universal textures in KTX™ 2.0 using OGC I3S 1.2 
 =======
 
-An application that compares an Integrated Mesh and 3D Object I3S layers in version 1.6 vs Version 1.7.
+An application based on [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/latest/) comparing Basis Universal supercompressed GPU textures in [KTX™ 2.0](https://www.khronos.org/ktx/) containers vs. Jpeg for Integrated Mesh and 3D Object layer types based on [OGC I3S 1.2](https://www.ogc.org/pressroom/pressreleases/4617) 
 
 To compare different layers, the app expects a webscene with bookmarks named using the following convention:
 [anyName]*_scene.1*  (eg. `View.1_scene.1`) - the name of a bookmark showcasing the i3s 1.6 layer.
