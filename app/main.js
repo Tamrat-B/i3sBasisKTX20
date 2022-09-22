@@ -1,5 +1,5 @@
 require([
-  "dojo/has",
+  //"dojo/has",
   "esri/config",
   "esri/request",
   "esri/WebScene",
