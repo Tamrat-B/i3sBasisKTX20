@@ -4,6 +4,7 @@ require([
   "esri/request",
   "esri/WebScene",
   "esri/core/watchUtils",
+  "esri/core/has",
   "esri/layers/Layer",
   "esri/views/MapView",
   "esri/views/SceneView",
