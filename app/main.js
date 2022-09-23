@@ -1,38 +1,29 @@
 require([
-  //"dojo/has",
   "esri/config",
   "esri/request",
   "esri/WebScene",
-  "esri/core/watchUtils",
-  "esri/core/has",
   "esri/layers/Layer",
   "esri/views/MapView",
   "esri/views/SceneView",
   "esri/views/support/waitForResources",
   "app/syncUtil",
-  "esri/layers/SceneLayer",
   "esri/widgets/Expand",
   "esri/widgets/Daylight"
 ], function(
-  has,
   config,
   esriRequest,
   WebScene,
-  watchUtils,
   Layer,
   MapView,
   SceneView,
   waitForResources,
   syncUtil,
-  SceneLayer,
   Expand,
   Daylight
 ) {
   var params = {};
-  //has.add("disable-feature:single-idb-cache", 1);
   var slide2Swapkey_1 = "scene.1";
   var slide2Swapkey_2 = "scene.2";
-
 
   var portal = params["portal"];
   if (portal) {
