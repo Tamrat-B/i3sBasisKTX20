@@ -57,7 +57,7 @@ define(["esri/Viewpoint", "esri/core/watchUtils"], function(Viewpoint, watchUtil
         scheduleId = setTimeout(function() {
           scheduleId = null;
           viewpointWatchHandle = view.watch("viewpoint", function(newValue) {
-            channel.postMessage(newValue.toJSON());
+            channel.postMessage(newValue.clone().toJSON());
           });
         }, 0);
 
